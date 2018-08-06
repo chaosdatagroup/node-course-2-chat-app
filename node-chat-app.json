@@ -1,0 +1,45 @@
+{
+  "apps" : [{
+    "env": { 
+	//taka se pravqt environments https://futurestud.io/tutorials/pm2-create-multiple-environments-in-process-file-json-js-yaml
+    	//eto q komandata za start --> pm2 start process.json --env production
+		//pm2 startOrGracefulReload process.json
+    	//po-dobre da polzvame tova watch -n 2 rsync -a /omega/rootApps/cryptoBI/dev /home/bitnami/rootApps/CryptoBI/dev
+     // in this section you would list variables that you 
+     // want available in all cases
+     //symbolic links for the apps ln -s /omega/rootApps/cryptoBI/dev /home/bitnami/rootApps/CryptoBI/dev
+     // rsync -uva --filter="- *.odb" --filter="- *.a3db" /source-path/ /destination-path/
+     //while true; do
+    //cmd >> output.txt
+    //sleep 2
+	//done
+	//eto go loop-a while true; do rsync -ua /omega/rootApps/cryptoBI/dev /home/bitnami/rootApps/CryptoBI/dev; sleep 2; done
+	//"node_args": ["--inspect=9229", "--nolazy","--inspect-brk"],
+	//"node_args": [ "--inspect-brk","--nolazy"],
+	//Note You can also run node --use_strict and get the same effect without any of the caveats.
+	//https://support.nodesource.com/support/solutions/articles/6000110661-using-n-solid-with-pm2
+       "NODE_PATH": "/home/bitnami/rootApps/CryptoBI/dev/node-chat-app/node_modules"
+      //,"NODE_ENV": "production"
+    },
+    "env_development": {
+      "CONFIG": "dev.conf.json",
+      "NODE_ENV": "development"
+    },
+    "env_production" : {
+       "CONFIG": "conf.json",
+       "NODE_ENV": "production"
+    },
+    "exec_mode": "fork", // or cluster if that's what you want
+    "name"        : "node-chat-app",
+    "script"      : "/home/bitnami/rootApps/CryptoBI/dev/node-chat-app/server/server.js",
+    "cwd": "/home/bitnami/rootApps/CryptoBI/dev/node-chat-app",		
+    "node_args": ["--inspect=192.168.1.184:9230", "--nolazy"],        
+	"watch"     : ["**"],
+	"ignore_watch" : ["node_modules"],
+    "merge_logs": true,
+    "watch_options": { 
+    "persistent"    : true,  
+    "followSymlinks": true
+  }
+  }]
+}
